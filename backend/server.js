@@ -6,15 +6,34 @@ const port = process.env.PORT || 3001;
 const app = express();
 const mongoose = require('mongoose');
 const Task = require('./models/taskModel');
-const taskRoutes = require(`./routes/taskRoute`);
+const deletedTask = require('./models/deletedTaskModel');
+// const taskRoutes = require(`./routes/taskRoute`);
+// const deletedRoutes = require('./routes/deletedRoute');
 const cors = require('cors');
 
 //! MIDDLEWARE
+console.log(process.env.MONGO_URI);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use('/api/tasks', taskRoutes);
-
+app.use('/api/tasks', require(`./routes/taskRoute`));
+app.use('/api/deleted', require(`./routes/deletedRoute`));
+// app.get(`/api/deleted`, async (req, res) => {
+//   try {
+//     const delTasks = await deletedTask.find({});
+//     res.status(200).json(delTasks);
+//   } catch (error) {
+//     res.status(500).json({ msg: error.message });
+//   }
+// });
+app.post(`/api/deleted`, async (req, res) => {
+  try {
+    const delTasks = await deletedTask.create(req.body);
+    res.status(200).json(delTasks);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+});
 // const logger = (req, res, next) => {
 //   console.log('Middleware active');
 //   console.log(req.method);
@@ -25,6 +44,9 @@ app.use('/api/tasks', taskRoutes);
 //!ROUTES
 app.get(`/`, (req, res) => {
   res.send(`Home Page`);
+});
+app.get(`/deleted`, (req, res) => {
+  res.send('pota');
 });
 
 //! TASK
