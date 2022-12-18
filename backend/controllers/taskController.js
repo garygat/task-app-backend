@@ -93,7 +93,7 @@ const updateTask = async (req, res) => {
         if (name1 === name) {
           console.log(req.body);
         } else {
-          await deletedTask.create({ name: name }).then(() => console.log(`Old data moved to bin.`));
+          await deletedTask.create({ name: name1 }).then(() => console.log(`Old data moved to bin.`));
         }
 
         // console.log(name);
