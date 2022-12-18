@@ -83,6 +83,16 @@ const deleteTask = async (req, res) => {
 const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
+    tae = await Task.findOne({ _id: id })
+      .populate('name')
+      .exec(async (error, task) => {
+        // console.log(task.name); // Shows the user result
+        let name;
+        name = await task.name;
+        await deletedTask.create({ name: name }).then(() => console.log(`added`));
+        // console.log(name);
+        // return name;
+      });
     const task = await Task.findByIdAndUpdate({ _id: id }, req.body, { new: true, runValidators: true });
     if (!task) {
       return res.status(404).json(`ID ${id} not found`);
