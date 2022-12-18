@@ -47,28 +47,11 @@ const deleteTask = async (req, res) => {
       .exec(async (error, task) => {
         // console.log(task.name); // Shows the user result
         let name;
-        name = task.name;
+        name = await task.name;
         await deletedTask.create({ name: name }).then(() => console.log(`added`));
         // console.log(name);
         // return name;
       });
-    // const t
-    // Task.findOne({ _id: id }, 'name ', async function (err, task) {
-    //   if (err) return handleError(err);
-    //   // Prints "Space Ghost is a talk show host".
-    //   // console.log(task.name);
-    //   tae = task.name.toObject;
-    // });
-    // ask1 = Task.findById(id);
-    // function RetrieveName(id, callback) {
-    //   Task.findOne({ _id: id }, function (err, task) {
-    //     if (err) {
-    //       callback(err, null);
-    //     } else {
-    //       callback(null, task.name);
-    //     }
-    //   });
-    // }
 
     // RetrieveName(task, function (err, name) {
     //   if (err) {

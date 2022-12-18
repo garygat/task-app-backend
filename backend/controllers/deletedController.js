@@ -1,4 +1,5 @@
 const deletedTask = require('../models/deletedTaskModel');
+const Task = require('../models/taskModel');
 // const deletedTaskRoutes = require('../routes/deletedRoute');
 // const taskRoutes = require(`../routes/taskRoute`);
 
@@ -37,6 +38,49 @@ const getDeletedTasks = async (req, res) => {
 // };
 
 // // # DELETE TASK
+const deleteTask = async (req, res) => {
+  const { id } = req.params;
+  let tae;
+  console.log(id);
+  // console.log(req.params);
+  try {
+    tae = await deletedTask
+      .findOne({ _id: id })
+      .populate('name')
+      .exec(async (error, task) => {
+        // console.log(task.name); // Shows the user result
+        let name;
+        name = await task.name;
+        await Task.create({ name: name }).then(() => console.log(`Returned to Active Tasks`));
+        // console.log(name);
+        // return name;
+      });
+
+    // RetrieveName(task, function (err, name) {
+    //   if (err) {
+    //     console.log(err);
+    //   }
+    //   tae1 = name;
+    //   console.log(tae1);
+    // });
+
+    await console.log(tae);
+    // await console.log(name);
+    // await deletedTask.create({ name: tae }).then(() => console.log(`added`));
+    // const tae1 = await deletedTask.find({});
+    // console.log(tae1);
+
+    // const addToDelete = await deleteTask.create(id, name);
+    const task = await deletedTask.findByIdAndDelete(id);
+    if (!task) {
+      return res.status(404).json(`ID ${id} not found`);
+    }
+
+    res.status(200).send(`Task deleted.`);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
 const emptyBin = async (req, res) => {
   try {
     const deleteMany = await deletedTask.deleteMany({});
@@ -71,6 +115,6 @@ module.exports = {
   createDeletedTask,
   emptyBin,
   // getDeletedTask,
-  // deleteTask,
+  deleteTask,
   // updateTask,
 };
