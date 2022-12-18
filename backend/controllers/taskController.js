@@ -83,13 +83,19 @@ const deleteTask = async (req, res) => {
 const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
+    const { name } = req.body;
     tae = await Task.findOne({ _id: id })
       .populate('name')
       .exec(async (error, task) => {
         // console.log(task.name); // Shows the user result
-        let name;
-        name = await task.name;
-        await deletedTask.create({ name: name }).then(() => console.log(`added`));
+        let name1;
+        name1 = await task.name;
+        if (name1 === name) {
+          console.log(req.body);
+        } else {
+          await deletedTask.create({ name: name }).then(() => console.log(`Old data moved to bin.`));
+        }
+
         // console.log(name);
         // return name;
       });
