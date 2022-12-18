@@ -48,7 +48,7 @@ const deleteTask = async (req, res) => {
     //   // console.log(task.name); // Shows the user result
     //   let name;
     //   name = await task.name;
-    await deletedTask.create({ name: tae.name }).then(() => console.log(`added`));
+    await deletedTask.create({ name: tae.name }).then(() => console.log(`Moved to bin`));
     // console.log(name);
     // return name;
     // });
