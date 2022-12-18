@@ -44,17 +44,19 @@ const deleteTask = async (req, res) => {
   console.log(id);
   // console.log(req.params);
   try {
-    tae = await deletedTask
-      .findOne({ _id: id })
-      .populate('name')
-      .exec(async (error, task) => {
-        // console.log(task.name); // Shows the user result
-        let name;
-        name = await task.name;
-        await Task.create({ name: name }).then(() => console.log(`Returned to Active Tasks`));
-        // console.log(name);
-        // return name;
-      });
+    tae = await deletedTask.findOne({ _id: id });
+    console.log(tae.name);
+    name = tae.name;
+    await Task.create({ name: name }).then(() => console.log(`Returned to Active Tasks`));
+    //  .populate('name')
+    //   .exec(async (error, task) => {
+    //     // console.log(task.name); // Shows the user result
+    //     let name;
+    //     name = await task.name;
+    //     await Task.create({ name: name }).then(() => console.log(`Returned to Active Tasks`));
+    //     // console.log(name);
+    //     // return name;
+    //   });
 
     // RetrieveName(task, function (err, name) {
     //   if (err) {

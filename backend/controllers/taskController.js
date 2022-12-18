@@ -42,16 +42,16 @@ const deleteTask = async (req, res) => {
   let tae;
 
   try {
-    tae = await Task.findOne({ _id: id })
-      .populate('name')
-      .exec(async (error, task) => {
-        // console.log(task.name); // Shows the user result
-        let name;
-        name = await task.name;
-        await deletedTask.create({ name: name }).then(() => console.log(`added`));
-        // console.log(name);
-        // return name;
-      });
+    tae = await Task.findOne({ _id: id });
+    // .populate('name')
+    // .exec(async (error, task) => {
+    //   // console.log(task.name); // Shows the user result
+    //   let name;
+    //   name = await task.name;
+    await deletedTask.create({ name: tae.name }).then(() => console.log(`added`));
+    // console.log(name);
+    // return name;
+    // });
 
     // RetrieveName(task, function (err, name) {
     //   if (err) {
@@ -84,21 +84,21 @@ const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
-    tae = await Task.findOne({ _id: id })
-      .populate('name')
-      .exec(async (error, task) => {
-        // console.log(task.name); // Shows the user result
-        let name1;
-        name1 = await task.name;
-        if (name1 === name) {
-          console.log(req.body);
-        } else {
-          await deletedTask.create({ name: name1 }).then(() => console.log(`Old data moved to bin.`));
-        }
+    tae = await Task.findOne({ _id: id });
+    // .populate('name')
+    // .exec(async (error, task) => {
+    // console.log(task.name); // Shows the user result
+    // let name1;
+    // name1 = await task.name;
+    if (tae.name === name) {
+      console.log(`Task ${tae.name} was not changed!`);
+    } else {
+      await deletedTask.create({ name: tae.name }).then(() => console.log(`Old data moved to bin.`));
+    }
 
-        // console.log(name);
-        // return name;
-      });
+    // console.log(name);
+    // return name;
+    // });
     const task = await Task.findByIdAndUpdate({ _id: id }, req.body, { new: true, runValidators: true });
     if (!task) {
       return res.status(404).json(`ID ${id} not found`);
