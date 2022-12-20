@@ -90,6 +90,7 @@ const updateTask = async (req, res) => {
     // console.log(task.name); // Shows the user result
     // let name1;
     // name1 = await task.name;
+    // # CONDITON IF STATE CHANGED
     if (tae.name === name) {
       console.log(`Task ${tae.name} was not changed!`);
     } else {

@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use('/api/tasks', require(`./routes/taskRoute`));
 app.use('/api/deleted', require(`./routes/deletedRoute`));
+// # FOR POSTMAN/INSOMNIA
 // app.get(`/api/deleted`, async (req, res) => {
 //   try {
 //     const delTasks = await deletedTask.find({});
@@ -26,6 +27,7 @@ app.use('/api/deleted', require(`./routes/deletedRoute`));
 //     res.status(500).json({ msg: error.message });
 //   }
 // });
+// # FOR POSTMAN/INSOMNIA
 app.post(`/api/deleted`, async (req, res) => {
   try {
     const delTasks = await deletedTask.create(req.body);
@@ -34,12 +36,6 @@ app.post(`/api/deleted`, async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 });
-// const logger = (req, res, next) => {
-//   console.log('Middleware active');
-//   console.log(req.method);
-//
-// next();
-// };
 
 //!ROUTES
 app.get(`/`, (req, res) => {
@@ -51,7 +47,7 @@ app.get(`/deleted`, (req, res) => {
 
 //! TASK
 
-//! CONNECT DB THEN SERVER
+//! CONNECT DB AWAIT SERVER
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log(`DB CONNECTED`))
